@@ -4,7 +4,11 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Desafio {
-
+	
+	private static int x;
+    private static int y;
+    private static char direcao;
+    
 	public static void main(String[] args) throws IOException {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Digite o numero da questao.");
@@ -47,7 +51,24 @@ public class Desafio {
 				break;
 			case 7:
 				System.out.println("Questão 7 – MarsRover");
-				// essa questão é chata e grande
+				// Obtém as dimensões do platô
+		        x = 1;
+		        y = 2;
+		        direcao = 'N';
+		        // Obtém as posições e as instruções de cada rover
+		        // Move o robô
+		        instrucoes("LMLMLMLMM");
+		        // Imprime a posição final do robô
+		        System.out.println("Rover 1 Position: " + getPosicao());
+		        
+		        x = 3;
+		        y = 3;
+		        direcao = 'E';
+		        // Obtém as posições e as instruções de cada rover
+		        // Move o robô
+		        instrucoes("MMRMMRMRRM");
+		        // Imprime a posição final do robô
+		        System.out.println("Rover 2 Position: " + getPosicao());
 				break;
 			default:
 				break;
@@ -135,4 +156,78 @@ public class Desafio {
 		}
 		return estrelas;
 	}
+
+    public static void instrucoes(String instrucoes) {
+        for (char instrucao : instrucoes.toCharArray()) {
+            switch (instrucao) {
+                case 'L':
+                    esquerda();
+                    break;
+                case 'R':
+                    direita();
+                    break;
+                case 'M':
+                    mover();
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid instruction: " + instrucao);
+            }
+        }
+    }
+
+    private static void esquerda() {
+        switch (direcao) {
+            case 'N':
+                direcao = 'W';
+                break;
+            case 'W':
+                direcao = 'S';
+                break;
+            case 'S':
+                direcao = 'E';
+                break;
+            case 'E':
+                direcao = 'N';
+                break;
+        }
+    }
+
+    private static void direita() {
+        switch (direcao) {
+            case 'N':
+                direcao = 'E';
+                break;
+            case 'E':
+                direcao = 'S';
+                break;
+            case 'S':
+                direcao = 'W';
+                break;
+            case 'W':
+                direcao = 'N';
+                break;
+        }
+    }
+
+    private static void mover() {
+        switch (direcao) {
+            case 'N':
+                y++;
+                break;
+            case 'E':
+                x++;
+                break;
+            case 'S':
+                y--;
+                break;
+            case 'W':
+                x--;
+                break;
+        }
+    }
+
+    public static String getPosicao() {
+        return x + " " + y + " " + direcao;
+    }
+
 }
